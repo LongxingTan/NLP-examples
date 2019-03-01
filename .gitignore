@@ -1,0 +1,9 @@
+/.idea/*
+/__pycache__/*
+/models/*
+!/models/*.py
+test.py
+/pretrained/*
+/result/*
+
+
