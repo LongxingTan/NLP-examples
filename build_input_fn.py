@@ -23,6 +23,7 @@ def generator_fn(words_file,tags_file):
 
 
 def input_fn_builder(params,training):
+    # initialise a Dataset from a generator, this is useful when we have an array of different elements length
     def input_fn():
         shapes = ((([None], ()),  # (words, nwords)
                    ([None, None], [None])),  # (chars, nchars)
@@ -107,7 +108,7 @@ class Bert_preprocessor(object):
             if set_type=='train':
                 tags=[self.tag[w[-1]] for w in example]
             else:
-                tags=[self.tag["O"] for _ in chars]
+                tags=[0 for _ in chars]
 
             if len(string)<self.params['seq_length']:
                 padding = [0] * (self.params['seq_length'] - len(string))
@@ -119,6 +120,10 @@ class Bert_preprocessor(object):
                 segs=segs[:self.params['seq_length']]
                 tags=tags[:self.params['seq_length']]
             features.append([chars, segs, tags])
+            if len(features)==1:
+                print('string',string)
+                print('chars',chars)
+                print('tags',tags)
         return features
 
     def _create_word_features(self,example):

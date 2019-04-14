@@ -19,15 +19,16 @@ parser.add_argument('--tag_lookup_file',type=str, default='./data/tag_dict.txt',
 parser.add_argument('--seq_length',type=int,default=150,help='sequence length for one example')
 parser.add_argument('--embed_size',type=int, default=100,help='embedding dim')
 parser.add_argument('--lstm_hidden_size',type=int, default=100,help='lstm hidden size')
-parser.add_argument('--dropout_keep',type=float, default=0.95,help='lstm hidden size')
+parser.add_argument('--dropout_keep',type=float, default=0.95,help='dropout keep prob')
 parser.add_argument('--if_ema',type=bool, default=False,help='if use ema or not')
 parser.add_argument('--if_char',type=bool, default=True,help='if use char embedding or word embedding')
-parser.add_argument('--do_train',type=bool, default=True,help='if train the model or not')
+parser.add_argument('--do_train',type=bool, default=False,help='if train the model or not')
 parser.add_argument('--do_eval',type=bool, default=True,help='if evaluate the model or not')
 parser.add_argument('--do_predict',type=bool, default=True,help='if predict the model or not')
 parser.add_argument('--bert_config_file',type=str, default='./pretrained/bert_chn/bert_config.json',help='bert config')
 parser.add_argument('--bert_init_checkpoint',type=str, default='./pretrained/bert_chn/bert_model.ckpt',help='bert ckpt')
 parser.add_argument('--bert_char_vocab_file',type=str, default='./pretrained/bert_chn/vocab.txt',help='bert vocab')
+parser.add_argument('--output_dir',type=str, default='./result',help='output dir')
 
 
 args = parser.parse_args()

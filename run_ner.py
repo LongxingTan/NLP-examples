@@ -1,7 +1,7 @@
 import logging
 from config import params
 import tensorflow as tf
-import pandas as pd
+import os
 from build_input_fn import input_fn_builder,bert_input_fn_builder,Bert_preprocessor
 from build_model_fn import model_fn_builder,bert_model_fn_builder
 from models.bi_lstm import Bi_LSTM
@@ -33,13 +33,12 @@ def run_ner_bert(ner_model):
         train_examples = processor.get_train_data(params['train_examples'])
         num_examples=len(train_examples)
         train_steps=int(num_examples//params['batch_size']*params['n_epoch'])
-        tf.logging.info("**** running training ****")
+        tf.logging.info("**** start to train ****")
         tf.logging.info("Num examples %d",num_examples)
         tf.logging.info("Num steps %d", train_steps)
         train_input_fn=bert_input_fn_builder(train_examples,batch_size=params['batch_size'],is_training=True)
         estimator.train(input_fn=train_input_fn,max_steps=train_steps)
 
-    if params['do_eval']:
         dev_examples=processor.get_dev_data(params['dev_examples'])
         num_dev_examples=len(dev_examples)
         dev_steps=int(num_dev_examples//params['batch_size'])
@@ -54,10 +53,14 @@ def run_ner_bert(ner_model):
         tf.logging.info("**** running predict ****")
         tf.logging.info("Num examples %d", num_test_examples)
         test_input_fn=bert_input_fn_builder(predict_examples,batch_size=params['batch_size'],is_training=False)
-        estimator.predict(input_fn=test_input_fn)
+        result=estimator.predict(input_fn=test_input_fn)
+        output_file = os.path.join(params['output_dir'], "label_test.txt")
 
-        output_file=pd.DataFrame()
-
+        with open(output_file, "w", encoding='utf-8') as writer:
+            tf.logging.info("***** Predict results *****")
+            for key in sorted(result.keys()):
+                tf.logging.info("  %s = %s", key, str(result[key]))
+                writer.write("%s = %s\n" % (key, str(result[key])))
 
 
 if __name__=='__main__':

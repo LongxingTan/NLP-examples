@@ -80,8 +80,11 @@ def load_bert_char(vocab_file, params):
             vocab[token] = index
             index_vocab[index] = token
             index += 1
+    if '<UNK' not in vocab:
+        length=len(vocab)
+        vocab.update({'<UNK>':length})
+        index_vocab.update({length:'<UNK>'})
     params.update(vocab_size=len(vocab))
-    vocab.update({'<UNK>':len(vocab)})
     return vocab, index_vocab
 
 def convert_to_unicode(text):

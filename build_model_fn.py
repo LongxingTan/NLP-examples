@@ -49,7 +49,7 @@ def model_fn_builder(ner_model,params):
             log_likelihood, _ = tf.contrib.crf.crf_log_likelihood(logits, tags, nwords, crf_params)
             loss = tf.reduce_mean(-log_likelihood)
 
-            weights = tf.sequence_mask(nwords)
+            weights = tf.sequence_mask(params['seq_length'])
             metrics = {'acc': tf.metrics.accuracy(tags, pred_ids, weights),}
             for metric_name, op in metrics.items():
                 tf.summary.scalar(metric_name, op[1])
