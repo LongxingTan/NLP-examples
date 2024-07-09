@@ -1,16 +1,18 @@
-# Named_entity_recognition (NER)
+# NLP
 
-This repository implements the common deep learning methods for named entity recognition in tensorflow.
-It's just prototypes for experimental purposes only
-
-## Models
-- bi_lstm_crf
-- bert_crf
-
-## Dependencies
-- python 3.6
-- tensorflow 1.12.0
-
-## Usage
-`python run_ner.py`
-
+- [文本分类](./text-classification/)
+- [实体识别](./entity_recognition/)
+- [知识图谱]()
+- [文本摘要]()
+  - transformer demo
+- [文本检索]()
+  - Elastic search demo
+  - faiss demo
+  - Contrastive learning enhancement demo
+- [对话问答]()
+  - gpt2 demo
+  - rag demo
+- [LLM微调]()
+- [LLM 召回生成]()
+- [LLM 强化学习对齐]()
+- [LLM Agent]()
